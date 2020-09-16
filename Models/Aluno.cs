@@ -2,11 +2,11 @@ namespace ProjetoEscola_API.Models
 {
     public class Aluno
     {
-        public int Id { get; set; }
-        public string RA { get; set; }
+        public int id { get; set; }
+        public string ra { get; set; }
 
-        public string Nome { get; set; }
+        public string nome { get; set; }
 
-        public int CodCurso { get; set; }
+        public int codCurso { get; set; }
     }
 }
