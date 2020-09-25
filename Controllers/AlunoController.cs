@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using ProjetoEscola_API.Data;
 using ProjetoEscola_API.Models;
 
@@ -47,19 +47,16 @@ namespace ProjetoEscola_API.Controllers
         [HttpPost]
         public async Task <ActionResult> post(Aluno model){
            
-           try {
-
-               _context.Aluno.Add(model);
-               if(await _context.SaveChangesAsync() == 1) {
-
-                   return Created($"/api/aluno/{model.ra}", model);
-               }
-           }
-           catch {
-               return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados.");
-           }
-
-           return BadRequest();
+           if(ModelState.IsValid) {
+                   
+                _context.Aluno.Add(model);
+                await _context.SaveChangesAsync();
+                return Created($"/api/aluno/{model.ra}", model);
+            }
+            else{
+               return BadRequest(ModelState);
+            }
+          
             //return Ok();
         }
 
