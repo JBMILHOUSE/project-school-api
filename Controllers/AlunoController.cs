@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 using ProjetoEscola_API.Data;
 using ProjetoEscola_API.Models;
 
@@ -92,11 +93,13 @@ namespace ProjetoEscola_API.Controllers
 
                     return BadRequest();
                 }
+                _context.Entry(dadosAlunoAlt).State = EntityState.Modified;
                 result.ra = dadosAlunoAlt.ra;
                 result.nome = dadosAlunoAlt.nome;
                 result.codCurso = dadosAlunoAlt.codCurso;
                 await _context.SaveChangesAsync();
-                return NoContent();
+                //return NoContent();
+                return Created($"/api/aluno/{dadosAlunoAlt.ra}", dadosAlunoAlt);
             }
             catch {
 
