@@ -81,19 +81,20 @@ namespace ProjetoEscola_API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados.");
             }
            
-           return BadRequest();
+           //return BadRequest();
         }
 
         [HttpPut("{AlunoId}")]
         public async Task<ActionResult> put(int AlunoId, Aluno dadosAlunoAlt) {
 
             try {
+               
                 var result = await _context.Aluno.FindAsync(AlunoId);
                 if(AlunoId != result.id) {
 
                     return BadRequest();
                 }
-                _context.Entry(dadosAlunoAlt).State = EntityState.Modified;
+                //_context.Entry(dadosAlunoAlt).State = EntityState.Modified;
                 result.ra = dadosAlunoAlt.ra;
                 result.nome = dadosAlunoAlt.nome;
                 result.codCurso = dadosAlunoAlt.codCurso;
